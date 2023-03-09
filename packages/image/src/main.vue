@@ -16,16 +16,16 @@
       :style="imageStyle"
       :class="{ 'el-image__inner--center': alignCenter, 'el-image__preview': preview }">
     <template v-if="preview">
-      <image-viewer :z-index="zIndex" :initial-index="imageIndex" v-if="showViewer" :on-close="closeViewer" :url-list="previewSrcList"/>
+      <image-viewer :z-index="zIndex" :initial-index="imageIndex" v-if="showViewer" :on-close="closeViewer" :url-list="previewSrcList" :appendToBody="appendToBody"/>
     </template>
   </div>
 </template>
 
 <script>
   import ImageViewer from './image-viewer';
-  import Locale from 'element-ui/src/mixins/locale';
-  import { on, off, getScrollContainer, isInContainer } from 'element-ui/src/utils/dom';
-  import { isString, isHtmlElement } from 'element-ui/src/utils/types';
+  import Locale from 'element-ui-fixing/src/mixins/locale';
+  import { on, off, getScrollContainer, isInContainer } from 'element-ui-fixing/src/utils/dom';
+  import { isString, isHtmlElement } from 'element-ui-fixing/src/utils/types';
   import throttle from 'throttle-debounce/throttle';
 
   const isSupportObjectFit = () => document.documentElement.style.objectFit !== undefined;
@@ -54,6 +54,7 @@
       src: String,
       fit: String,
       lazy: Boolean,
+      appendToBody: Boolean,
       scrollContainer: {},
       previewSrcList: {
         type: Array,

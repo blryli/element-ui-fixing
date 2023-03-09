@@ -30,13 +30,14 @@ const defaults = {
   dangerouslyUseHTMLString: false,
   center: false,
   roundButton: false,
-  distinguishCancelAndClose: false
+  distinguishCancelAndClose: false,
+  appendTo: null
 };
 
 import Vue from 'vue';
 import msgboxVue from './main.vue';
-import merge from 'element-ui/src/utils/merge';
-import { isVNode } from 'element-ui/src/utils/vdom';
+import merge from 'element-ui-fixing/src/utils/merge';
+import { isVNode } from 'element-ui-fixing/src/utils/vdom';
 
 const MessageBoxConstructor = Vue.extend(msgboxVue);
 
@@ -65,6 +66,17 @@ const defaultCallback = action => {
       }
     }
   }
+};
+
+const getAppendToElement = ({appendTo}) => {
+  if (!appendTo) return document.body;
+  if (typeof appendTo === 'string') {
+    return document.querySelector(appendTo);
+  }
+  if (typeof appendTo === 'function') {
+    return appendTo();
+  }
+  return appendTo;
 };
 
 const initInstance = () => {
@@ -111,7 +123,7 @@ const showNextMsg = () => {
           instance[prop] = true;
         }
       });
-      document.body.appendChild(instance.$el);
+      getAppendToElement(options).appendChild(instance.$el);
 
       Vue.nextTick(() => {
         instance.visible = true;

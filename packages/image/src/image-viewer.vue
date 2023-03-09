@@ -53,9 +53,9 @@
 </template>
 
 <script>
-import { on, off } from 'element-ui/src/utils/dom';
-import { rafThrottle, isFirefox } from 'element-ui/src/utils/util';
-import { PopupManager } from 'element-ui/src/utils/popup';
+import { on, off } from 'element-ui-fixing/src/utils/dom';
+import { rafThrottle, isFirefox } from 'element-ui-fixing/src/utils/util';
+import { PopupManager } from 'element-ui-fixing/src/utils/popup';
 
 const Mode = {
   CONTAIN: {
@@ -94,10 +94,7 @@ export default {
       type: Number,
       default: 0
     },
-    appendToBody: {
-      type: Boolean,
-      default: true
-    },
+    appendToBody: Boolean,
     maskClosable: {
       type: Boolean,
       default: true

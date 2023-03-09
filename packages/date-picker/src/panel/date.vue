@@ -163,11 +163,11 @@
     extractDateFormat,
     extractTimeFormat,
     timeWithinRange
-  } from 'element-ui/src/utils/date-util';
-  import Clickoutside from 'element-ui/src/utils/clickoutside';
-  import Locale from 'element-ui/src/mixins/locale';
-  import ElInput from 'element-ui/packages/input';
-  import ElButton from 'element-ui/packages/button';
+  } from 'element-ui-fixing/src/utils/date-util';
+  import Clickoutside from 'element-ui-fixing/src/utils/clickoutside';
+  import Locale from 'element-ui-fixing/src/mixins/locale';
+  import ElInput from 'element-ui-fixing/packages/input';
+  import ElButton from 'element-ui-fixing/packages/button';
   import TimePicker from './time';
   import YearTable from '../basic/year-table';
   import MonthTable from '../basic/month-table';

@@ -1,22 +1,32 @@
 import Vue from 'vue';
 import Main from './main.vue';
-import { PopupManager } from 'element-ui/src/utils/popup';
-import { isVNode } from 'element-ui/src/utils/vdom';
-import { isObject } from 'element-ui/src/utils/types';
+import { PopupManager } from 'element-ui-fixing/src/utils/popup';
+import { isVNode } from 'element-ui-fixing/src/utils/vdom';
+import { isObject } from 'element-ui-fixing/src/utils/types';
 let MessageConstructor = Vue.extend(Main);
 
 let instance;
 let instances = [];
 let seed = 1;
-
+const getAppendToElement = ({appendTo}) => {
+  if (!appendTo) return document.body;
+  if (typeof appendTo === 'string') {
+    return document.querySelector(appendTo);
+  }
+  if (typeof appendTo === 'function') {
+    return appendTo();
+  }
+  return appendTo;
+};
 const Message = function(options) {
   if (Vue.prototype.$isServer) return;
-  options = options || {};
+  const defaults = Message.defaults || {};
   if (typeof options === 'string') {
     options = {
       message: options
     };
   }
+  options = Object.assign({}, defaults, options || {});
   let userOnClose = options.onClose;
   let id = 'message_' + seed++;
 
@@ -32,7 +42,7 @@ const Message = function(options) {
     instance.message = null;
   }
   instance.$mount();
-  document.body.appendChild(instance.$el);
+  getAppendToElement(options).appendChild(instance.$el);
   let verticalOffset = options.offset || 20;
   instances.forEach(item => {
     verticalOffset += item.$el.offsetHeight + 16;
@@ -58,6 +68,10 @@ const Message = function(options) {
     });
   };
 });
+
+Message.setDefaults = defaults => {
+  Message.defaults = defaults;
+};
 
 Message.close = function(id, userOnClose) {
   let len = instances.length;
